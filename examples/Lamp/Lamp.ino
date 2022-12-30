@@ -1,13 +1,14 @@
-/*
+/**
+  @file Lamp.ino
   Modbus-Arduino Example - Lamp (Modbus IP ESP8266 AT)
   Copyright by André Sarmento Barbosa
-  http://github.com/andresarmento/modbus-arduino
+  https://github.com/epsilonrt/modbus-esp8266at
 */
 
 #include <ESP8266.h>
 #include <SoftwareSerial.h>
 #include <Modbus.h>
-#include <ModbusIP_ESP8266AT.h>
+#include <ModbusEsp8266AT.h>
 
 SoftwareSerial wifiSerial(2 , 3);
 ESP8266 wifi(wifiSerial, 9600);
@@ -17,8 +18,8 @@ const int LAMP1_COIL = 100;
 //Used Pins
 const int ledPin = 13;
 
-//ModbusIP object
-ModbusIP mb;
+//ModbusEsp8266AT object
+ModbusEsp8266AT mb;
 
 void setup() {
     //Config Modbus IP

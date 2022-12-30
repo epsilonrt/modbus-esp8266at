@@ -1,0 +1,34 @@
+{
+  "name": "Modbus-Esp8266AT",
+  "version": "1.0.0",
+  "keywords": "modbus, server, slave, tcp, esp8266, at",
+  "description": "A library that allows your Arduino to communicate via Modbus protocol, acting as a slave. Over TCP/IP implementation for ESP8266 AT controller.",
+  "homepage": "https://github.com/epsilonrt/modbus-esp8266at",
+  "authors":
+  [
+    {
+      "name": "Pascal JEAN aka epsilonrt",
+      "url": "https://github.com/epsilonrt",
+      "maintainer": true
+    },
+    {
+      "name": "André Sarmento Barbosa",
+      "url": "https://github.com/andresarmento"
+    }
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/epsilonrt/modbus-esp8266at.git"
+  },
+  "license": "BSD-3-Clause",
+  "examples":[
+    "examples/*/*.ino"
+  ],
+  "dependencies": {
+    "modbus-arduino": "https://github.com/epsilonrt/modbus-arduino.git#1.1.1",
+    "itead/WeeESP8266": "^1.0.0"
+  },
+  "frameworks": "arduino",
+  "platforms": "*"
+}
