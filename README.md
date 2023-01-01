@@ -1,5 +1,16 @@
-Modbus Library for Arduino - Over TCP/IP implementation for ESP8266 AT controller
-=================================================================================
+# Modbus Library for Arduino  
+Over TCP/IP implementation for ESP8266 AT controller
+
+
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/epsilonrt/modbus-esp8266at?include_prereleases)](https://github.com/epsilonrt/modbus-esp8266at/releases) 
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/epsilonrt/library/modbus-esp8266at.svg)](https://registry.platformio.org/libraries/epsilonrt/modbus-esp8266at) 
+
+[![Framework](https://img.shields.io/badge/Framework-Arduino-blue)](https://www.arduino.cc/)
+[![Uno](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_uno.yml/badge.svg)](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_uno.yml) 
+[![Due](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_due.yml/badge.svg)](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_due.yml) 
+[![Mega](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_mega.yml/badge.svg)](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_mega.yml) 
+[![Nano33IoT](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_nano33iot.yml/badge.svg)](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_nano33iot.yml) 
+
 
 This library allows your Arduino to communicate via Modbus protocol. The Modbus is a master-slave protocol
 used in industrial automation and can be used in other areas, such as home automation.
@@ -59,23 +70,12 @@ For Modbus IP (ESP8266 AT) there is four examples that can be accessed from the 
 Let's look at the example Lamp.ino (only the parts concerning Modbus will be commented):
 
     #include <ESP8266.h>
-    #include <SoftwareSerial.h>   // Only if using Softwareserial to communicate with the module
     #include <Modbus.h>
     #include <ModbusEsp8266AT.h>
 
-Inclusion of the necessary libraries.
-
-    SoftwareSerial wifiSerial(2 , 3);
-
-Creates the serial interface via software using pins 2 (RX) and 3 (TX). So it can use
-hardware for the serial communication with the PC (e.g. for debugging purposes) in Arduino models that have only one serial (Ex .: Arduino UNO).
-
-    ESP8266 wifi(wifiSerial, 9600); // You will need to eanble the constructor for SoftwareSerial in the WeeESP8266 library (ITEAD)
-
+    ESP8266 wifi(Serial, 9600);
+    
 Create the wifi object (ESP8266) specifying the rate in bps.
-Warning: If you use SoftwareSerial do not specify a baud rate of 115200bps or more for the serial because it will not function. Some firmware / modules comes with 115200bps by default. You will have to change the module via AT command:
-
-    AT+CIOBAUD=9600
 
 Continuing with our example:
 
@@ -127,14 +127,14 @@ DHCP is always the same (Most routers have this feature).
 
     mb.config(wifi, "your_ssid", "your_password");
     delay(1000);
-    wifiSerial.println("AT+CIPSTA=\"192.168.1.44\"");
+    Serial.println("AT+CIPSTA=\"192.168.1.44\"");
 
 
 Note: For the module to  receive IP via DHCP again you will need to remove the lines
 and run (at least once) the command: AT + CWDHCP = 1.1 via direct connection to the module, either:
 
 
-    wifiSerial.println("AT+CWDHCP=1,1");
+    Serial.println("AT+CWDHCP=1,1");
 
 Contributions
 =============

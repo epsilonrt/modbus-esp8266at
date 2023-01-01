@@ -6,13 +6,11 @@
 */
 
 #include <ESP8266.h>
-#include <SoftwareSerial.h>
 #include <Modbus.h>
 #include <ModbusEsp8266AT.h>
 #include <Servo.h>
 
-SoftwareSerial wifiSerial(2 , 3);
-ESP8266 wifi(wifiSerial, 9600);
+ESP8266 wifi(Serial, 9600);
 
 // Modbus Registers Offsets (0-9999)
 const int SERVO_HREG = 100;
