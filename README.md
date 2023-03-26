@@ -1,9 +1,10 @@
-# Modbus Library for Arduino  
+# Modbus Esp8266AT Library for Arduino  
 Over TCP/IP implementation for ESP8266 AT controller
 
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/epsilonrt/modbus-esp8266at?include_prereleases)](https://github.com/epsilonrt/modbus-esp8266at/releases) 
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/epsilonrt/library/modbus-esp8266at.svg)](https://registry.platformio.org/libraries/epsilonrt/modbus-esp8266at) 
+[![Arduino Registry](https://www.ardu-badge.com/badge/Modbus-Esp8266AT.svg)](https://www.arduinolibraries.info/libraries/modbus-esp8266-at)
 
 [![Framework](https://img.shields.io/badge/Framework-Arduino-blue)](https://www.arduino.cc/)
 [![Uno](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_uno.yml/badge.svg)](https://github.com/epsilonrt/modbus-esp8266at/actions/workflows/build_uno.yml) 
@@ -24,18 +25,18 @@ In the current version the library allows the Arduino operate **as a slave**, su
 
 There are four classes corresponding to five headers that may be used:
 
-* [Modbus](http://github.com/epsilonrt/modbus-arduino ) - Base Library
-* [ModbusSerial](https://github.com/epsilonrt/modbus-serial) - Modbus Serial RTU Library    
-* [ModbusEthernet](https://github.com/epsilonrt/modbus-ethernet) - Modbus TCP Library (standard Ethernet Shield)   
-* [ModbusEthercard](https://github.com/epsilonrt/modbus-ethercard) - Modbus TCP Library (for ENC28J60 chip)  
-* [ModbusEsp8266AT](https://github.com/epsilonrt/modbus-esp8266at) - Modbus IP Library (for ESP8266 chip with AT firmware)   
+* [Modbus-Arduino](http://github.com/epsilonrt/modbus-arduino ) - Base Library
+* [Modbus-Serial](https://github.com/epsilonrt/modbus-serial) - Modbus Serial RTU Library    
+* [Modbus-Ethernet](https://github.com/epsilonrt/modbus-ethernet) - Modbus TCP Library (standard Ethernet Shield)   
+* [Modbus-EtherCard](https://github.com/epsilonrt/modbus-ethercard) - Modbus TCP Library (for ENC28J60 chip)  
+* [Modbus-Esp8266AT](https://github.com/epsilonrt/modbus-esp8266at) - Modbus IP Library (for ESP8266 chip with AT firmware)   
 
 By opting for Modbus Serial or Modbus TCP you must include in your sketch the corresponding header and the base library header, eg:
 
     #include <Modbus.h>
     #include <ModbusSerial.h>
 
-## ModbusEsp8266AT
+## Modbus-Esp8266AT
 
 Modules based on ESP8266 are quite successful and cheap. With firmware that
 responds to AT commands (standard on many modules) you can use them as a
@@ -56,15 +57,7 @@ https://github.com/itead/ITEADLIB_Arduino_WeeESP8266 and install in your IDE.
 
 **Notes:**
 
-1. The ESP8266 library can be used with a serial interface by hardware (HardwareSerial) or
-by software (SoftwareSerial). By default it will use HardwareSerial, to change edit the file
-ESP8266.h removing the comments from line:
-
-
-		#define ESP8266_USE_SOFTWARE_SERIAL
-
-
-2. Remember that the power of ESP8266 module is 3.3V.
+Remember that the power of ESP8266 module is 3.3V.
 
 For Modbus IP (ESP8266 AT) there is four examples that can be accessed from the Arduino interface.
 Let's look at the example Lamp.ino (only the parts concerning Modbus will be commented):
@@ -96,24 +89,48 @@ By default IP configuration is received via DHCP. See the end of the section how
 
 Folowing, we have:
 
-    mb.addCoil (LAMP1_COIL);
+    mb.addCoil (Lamp1Coil);
 
-Adds the register type Coil (digital output) that will be responsible for activating the LED or lamp and verify their status.
+Adds the register type Coil (digital output) that will be responsible for 
+activating the LED or lamp and verify their status. 
 The library allows you to set an initial value for the register:
 
-    mb.addCoil (LAMP1_COIL, true);
+    mb.addCoil (Lamp1Coil, true);
 
-In this case the register is added and set to true. If you use the first form the default value is false.
+In this case the register is added and set to true. If you use the first form 
+the default value is false.
 
-    mb.task();
+    mb.task ();
 
-This method makes all magic, answering requests and changing the registers if necessary, it should be called only once, early in the loop.
+This method makes all magic, answering requests and changing the registers if 
+necessary, it should be called only once, early in the loop.
 
-    digitalWrite(ledPin, mb.Coil(LAMP1_COIL));
+    digitalWrite (LedPin, mb.coil (Lamp1Coil));
 
-Finally the value of LAMP1_COIL register is used to drive the lamp or LED.
+Finally the value of Lamp1Coil register is used to drive the lamp or LED.
 
-Quite similarly to other examples show the use of other methods available in the library.
+In much the same way, the other examples show the use of other methods available in the library:
+
+    void addCoil (offset word, bool value)
+    void addHreg (offset word, word value)
+    void addIsts (offset word, bool value)
+    void addIreg (offset word, word value)
+
+Adds registers and configures initial value if specified.
+
+    bool setCoil (offset word, bool value)
+    bool setHreg (offset word, word value)
+    bool setIsts (offset word, bool value)
+    bool setIReg (offset word, word value)
+
+Sets a value to the register.
+
+    bool coil (offset word)
+    word hreg  (word offset)
+    bool ists (offset word)
+    word ireg (word offset)
+
+Returns the value of a register.
 
 
 **Using a static IP on the ESP8266 module**
@@ -135,12 +152,6 @@ and run (at least once) the command: AT + CWDHCP = 1.1 via direct connection to 
 
 
     Serial.println("AT+CWDHCP=1,1");
-
-Contributions
-=============
-http://github.com/epsilonrt/modbus-arduino  
-epsilonrt (at) gmail (dot) com  
-prof (at) andresarmento (dot) com  
 
 License
 =======
